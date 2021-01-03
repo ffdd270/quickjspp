@@ -22,6 +22,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
+#undef CONFIG_JSX
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -33668,13 +33670,13 @@ static JSValue __JS_EvalInternal(JSContext *ctx, JSValueConst this_obj,
 /* the indirection is needed to make 'eval' optional */
 static JSValue JS_EvalInternal(JSContext *ctx, JSValueConst this_obj,
                                const char *input, size_t input_len,
-                               const char *filename, int flags, int scope_idx, int line_no)
+                               const char *filename, int flags, int scope_idx)
 {
     if (unlikely(!ctx->eval_internal)) {
         return JS_ThrowTypeError(ctx, "eval is not supported");
     }
     return ctx->eval_internal(ctx, this_obj, input, input_len, filename,
-                              flags, scope_idx, line_no);
+                              flags, scope_idx, 0);
 }
 
 static JSValue JS_EvalObject(JSContext *ctx, JSValueConst this_obj,
